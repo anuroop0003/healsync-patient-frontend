@@ -23,7 +23,7 @@ export default defineConfig({
         display: "standalone",
         orientation: "portrait",
         theme_color: "#ffffff",
-        background_color: "#000000",
+        background_color: "#ffffff",
         icons: [
           {
             // Standard icon for Android/Chrome home screens
