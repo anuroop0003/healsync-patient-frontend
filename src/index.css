@@ -1,8 +1,10 @@
-body {
-  /* This ensures your app fills the height of the screen */
+html, body {
+  margin: 0;
+  background: #ffffff;
   min-height: 100dvh;
-  
-  /* Adds space so your text isn't stuck under the notch or home bar */
+}
+
+body {
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
 }
