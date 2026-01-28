@@ -10,9 +10,9 @@ const MedicalHistory = () => {
       <Timeline />
       <Button
         size="icon"
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-xl"
+        className="fixed bottom-6 right-6 size-15 rounded-full shadow-xl"
       >
-        <Plus className="h-6 w-6" />
+        <Plus className="size-6" />
       </Button>
     </div>
   );
