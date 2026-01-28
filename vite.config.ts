@@ -18,12 +18,12 @@ export default defineConfig({
       },
       manifest: {
         name: "HealSync",
-        short_name: "HS",
+        short_name: "HealSync",
         start_url: "/",
         display: "standalone",
         orientation: "portrait",
-        background_color: "#ffffff",
-        theme_color: "#000000",
+        theme_color: "#ffffff",
+        background_color: "#000000",
         icons: [
           {
             // Standard icon for Android/Chrome home screens
@@ -57,6 +57,5 @@ export default defineConfig({
   },
   server: {
     port: 3002,
-    host: true
   },
 })
