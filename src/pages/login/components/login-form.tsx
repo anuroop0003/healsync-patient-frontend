@@ -1,3 +1,8 @@
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,13 +27,14 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { IdCard, Smartphone } from "lucide-react";
+import { IdCard, RefreshCwIcon, Smartphone } from "lucide-react";
 
 const loginSchema = z.object({
   aadhar: z.string().regex(/^\d{12}$/, "Aadhaar must be exactly 12 digits"),
   mobile: z
     .string()
     .regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"),
+  otp: z.string().length(6, "OTP must be 6 digits"),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -88,6 +94,39 @@ const LoginForm = () => {
                         <Smartphone />
                       </InputGroupAddon>
                     </InputGroup>
+                    <FieldError className="-mt-2">{error?.message}</FieldError>
+                  </Field>
+                )}
+              />
+
+              <Controller
+                name="otp"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <Field>
+                    <div className="flex items-center justify-between">
+                      <FieldLabel htmlFor="otp-verification">
+                        Verification code
+                      </FieldLabel>
+                      <Button variant="outline" size="xs">
+                        <RefreshCwIcon />
+                        Resend Code
+                      </Button>
+                    </div>
+                    <InputOTP
+                      maxLength={6}
+                      value={field.value}
+                      onChange={field.onChange}
+                    >
+                      <InputOTPGroup className="*:flex-1 w-full">
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                        <InputOTPSlot index={4} />
+                        <InputOTPSlot index={5} />
+                      </InputOTPGroup>
+                    </InputOTP>
                     <FieldError className="-mt-2">{error?.message}</FieldError>
                   </Field>
                 )}
