@@ -28,6 +28,7 @@ import {
   type LoginFormValues,
 } from "@/validations/login/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { IdCard, RefreshCwIcon, Smartphone } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -39,6 +40,7 @@ const LoginForm = () => {
     defaultValues: {
       aadhar: "",
       mobile: "",
+      otp: "",
     },
   });
 
@@ -109,6 +111,7 @@ const LoginForm = () => {
                     </div>
                     <InputOTP
                       maxLength={6}
+                      pattern={REGEXP_ONLY_DIGITS}
                       value={field.value}
                       onChange={field.onChange}
                     >

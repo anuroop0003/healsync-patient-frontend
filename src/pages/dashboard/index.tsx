@@ -6,15 +6,13 @@ import RecordsServices from "./components/records-services";
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="h-full bg-background flex flex-col">
       <Header />
-
-      <main className="flex-1 px-3 space-y-12">
+      <div className="flex-1 px-3 space-y-12 mb-6">
         <CurrentToken />
         <BookToken />
         <RecordsServices />
-      </main>
-
+      </div>
       <BottomNav />
     </div>
   );

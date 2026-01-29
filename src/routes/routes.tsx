@@ -1,4 +1,5 @@
 import AppLayout from "@/components/app-layout";
+import Chat from "@/pages/chat";
 import Dashboard from "@/pages/dashboard";
 import Login from "@/pages/login";
 import MedicalHistory from "@/pages/medical-history";
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "chat",
-        element: <div>AI Chat</div>,
+        element: <Chat />,
       },
       {
         path: "profile",

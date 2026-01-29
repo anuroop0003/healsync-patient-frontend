@@ -1,19 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 import Header from "./components/header";
 import Timeline from "./components/timeline";
 
 const MedicalHistory = () => {
   return (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative h-full bg-background text-foreground">
       <Header />
       <Timeline />
-      <Button
-        size="icon"
-        className="fixed bottom-6 right-6 size-15 rounded-full shadow-xl"
-      >
-        <Plus className="size-6" />
-      </Button>
     </div>
   );
 };
