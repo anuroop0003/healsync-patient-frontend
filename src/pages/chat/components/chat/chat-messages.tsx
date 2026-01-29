@@ -38,7 +38,7 @@ export const ChatMessages = ({ isPending, messages }: Props) => {
           <div
             key={i}
             className={cn(
-              "flex min-w-[50%] max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
+              "flex w-fit max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
               m.role === "user"
                 ? "bg-primary text-primary-foreground ml-auto"
                 : "bg-muted",

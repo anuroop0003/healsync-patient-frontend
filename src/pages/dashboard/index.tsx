@@ -11,8 +11,8 @@ const Dashboard = () => {
 
   if (isFetching || !data)
     return (
-      <div className="flex-1 flex flex-col items-center justify-center bg-background">
-        <Loader2 className="size-8 animate-spin" />
+      <div className="h-full flex flex-col items-center justify-center bg-background">
+        <Loader2 className="size-10 animate-spin" />
       </div>
     );
 

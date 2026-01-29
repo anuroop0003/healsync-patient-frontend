@@ -31,6 +31,7 @@ const ChatInput = ({ input, setInput, onSend }: Props) => {
         <InputGroupButton
           variant="outline"
           size="icon-sm"
+          className="ml-auto"
           onClick={onSend}
           disabled={!input.trim()}
         >

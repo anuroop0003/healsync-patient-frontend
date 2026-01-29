@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useChatMessage } from "@/services/query/chat/chat.api";
 import { Mic } from "lucide-react";
 import { useState } from "react";
 import ChatInput from "../chat/chat-input";
@@ -8,36 +9,56 @@ interface TextViewProps {
   onBack: () => void;
 }
 
-// Mock messages for illustration
-const initialMessages = [
-  {
-    id: "1",
-    sender: "bot",
-    text: "Hello! I'm your AI health assistant. How can I help you today?",
-    timestamp: new Date().toISOString(),
-    isRead: true,
-  },
-];
-
 const TextView = ({ onBack }: TextViewProps) => {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState<any[]>([
+    {
+      role: "assistant",
+      content: "Hello! I'm your AI health assistant. How can I help you today?",
+    },
+  ]);
 
-  const handleSendMessage = () => {
-    if (!input.trim()) return;
+  const { mutateAsync: sendMessage, isPending } = useChatMessage();
 
-    const newMessage = {
-      id: Date.now().toString(),
-      sender: "user",
-      text: input,
-      timestamp: new Date().toISOString(),
-      isRead: false,
+  const handleSendMessage = async () => {
+    if (!input.trim() || isPending) return;
+
+    const userMessage = {
+      role: "user",
+      content: input,
     };
 
-    setMessages((prev) => [...prev, newMessage]);
+    setMessages((prev) => [...prev, userMessage]);
+    const currentInput = input;
     setInput("");
 
-    // Logic for bot response would go here
+    try {
+      const response = await sendMessage({
+        message: currentInput,
+        thread_id: "default-thread", // Should be managed or fetched
+        user_id: "default-user", // Should be fetched from auth
+        is_audio: false,
+      });
+
+      if (response) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: response.message,
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "Sorry, I encountered an error. Please try again.",
+        },
+      ]);
+    }
   };
 
   return (
@@ -48,18 +69,19 @@ const TextView = ({ onBack }: TextViewProps) => {
           Chat Assistant
         </h2>
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
+          className="cursor-pointer"
           onClick={onBack}
-          className="rounded-full gap-2 text-primary"
         >
-          <Mic className="size-4" /> Use Voice
+          <Mic />
+          Use Voice
         </Button>
       </header>
 
       {/* Message List */}
       <div className="flex-1 overflow-y-auto">
-        <ChatMessages isPending={false} messages={messages} />
+        <ChatMessages isPending={isPending} messages={messages} />
       </div>
 
       {/* Input Area */}
