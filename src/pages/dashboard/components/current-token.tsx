@@ -8,17 +8,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import type { TokenInfo } from "@/services/query/dashboard/dashboard.types";
 import { CircleSmall, Clock, Stethoscope } from "lucide-react";
 
-const CurrentToken = () => {
+const CurrentToken = ({ data }: { data: TokenInfo }) => {
   return (
     <Card className="rounded-3xl bg-linear-to-br from-black to-neutral-900 text-white">
       <CardHeader>
         <CardTitle className="uppercase text-xs text-muted-foreground tracking-wider">
           Current Token
         </CardTitle>
-        <CardDescription className="text-4xl text-white font-bold">
-          A-104
+        <CardDescription className="text-2xl text-white font-bold">
+          {data.token_number}
         </CardDescription>
         <CardAction>
           <Badge className="uppercase flex items-center border-emerald-300 bg-emerald-50 text-emerald-700 leading-snug">
@@ -32,20 +33,20 @@ const CurrentToken = () => {
           <Stethoscope />
           <div className="flex flex-col gap-1">
             <p className="text-xs text-muted-foreground">
-              Consulting Physician
+              {data.doctor_specialization}
             </p>
-            <p className="text-sm font-medium">Doctor Jenkins</p>
+            <p className="text-sm font-medium">{data.doctor_name}</p>
           </div>
         </div>
         <Separator className="bg-white/20" />
         <div className="flex justify-between text-xs">
           <span className="flex items-center gap-1">
             <CircleSmall className="fill-emerald-500 text-emerald-500" />
-            Now Serving A-101
+            Now Serving {data.current_token}
           </span>
           <span className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
-            12 min
+            {data.approx_waiting_time}
           </span>
         </div>
       </CardContent>
