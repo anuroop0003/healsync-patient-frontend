@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
   return (
-    <div className="min-h-dvh pb-20">
+    <div className="min-h-dvh flex flex-col">
       <Outlet />
       <BottomNav />
     </div>

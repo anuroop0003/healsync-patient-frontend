@@ -65,12 +65,13 @@ const LoginForm = () => {
       }
 
       if (data.otpSent && data.otp && data.txnId) {
-        await verifyOtp({
+        const res = await verifyOtp({
           mobile: data.mobile,
           otp: data.otp,
           txn_id: data.txnId,
         });
 
+        localStorage.setItem("access_token", res.token);
         reset();
         navigate("/dashboard");
         return;
@@ -164,6 +165,7 @@ const LoginForm = () => {
                 <Button
                   type="submit"
                   className="w-full cursor-pointer"
+                  onClick={() => navigate("/dashboard")}
                   loading={isSendingOtp || isVerifyingOtp}
                   disabled={isSendingOtp || isVerifyingOtp}
                 >

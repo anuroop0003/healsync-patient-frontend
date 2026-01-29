@@ -3,7 +3,7 @@ import Timeline from "./components/timeline";
 
 const MedicalHistory = () => {
   return (
-    <div className="relative h-full bg-background text-foreground">
+    <div className="relative flex-1 bg-background text-foreground overflow-auto">
       <Header />
       <Timeline />
     </div>
