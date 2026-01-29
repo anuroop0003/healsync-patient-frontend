@@ -20,7 +20,7 @@ export default defineConfig({
         name: "HealSync",
         short_name: "HealSync",
         start_url: "/",
-        display: "standalone",
+        display: "fullscreen",
         orientation: "portrait",
         theme_color: "#ffffff",
         background_color: "#ffffff",
