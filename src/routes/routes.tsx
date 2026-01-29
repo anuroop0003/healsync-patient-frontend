@@ -4,30 +4,29 @@ import Dashboard from "@/pages/dashboard";
 import Login from "@/pages/login";
 import MedicalHistory from "@/pages/medical-history";
 import { createBrowserRouter } from "react-router-dom";
+import { PrivateRoute, PublicRoute } from "./route-guards";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Login />,
-  },
-  {
-    element: <AppLayout />,
+    element: <PublicRoute />,
     children: [
       {
-        path: "dashboard",
-        element: <Dashboard />,
+        path: "/",
+        element: <Login />,
       },
+    ],
+  },
+  {
+    element: <PrivateRoute />,
+    children: [
       {
-        path: "medical-history",
-        element: <MedicalHistory />,
-      },
-      {
-        path: "chat",
-        element: <Chat />,
-      },
-      {
-        path: "profile",
-        element: <div>Profile</div>,
+        element: <AppLayout />,
+        children: [
+          { path: "dashboard", element: <Dashboard /> },
+          { path: "medical-history", element: <MedicalHistory /> },
+          { path: "chat", element: <Chat /> },
+          { path: "profile", element: <div>Profile</div> },
+        ],
       },
     ],
   },

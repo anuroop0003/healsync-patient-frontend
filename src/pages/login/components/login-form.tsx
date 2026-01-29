@@ -165,7 +165,6 @@ const LoginForm = () => {
                 <Button
                   type="submit"
                   className="w-full cursor-pointer"
-                  onClick={() => navigate("/dashboard")}
                   loading={isSendingOtp || isVerifyingOtp}
                   disabled={isSendingOtp || isVerifyingOtp}
                 >
