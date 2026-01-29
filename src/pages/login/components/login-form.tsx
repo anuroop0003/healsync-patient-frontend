@@ -23,29 +23,61 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useSendOtp, useVerifyOtp } from "@/services/query/login/login.api";
 import {
   loginSchema,
   type LoginFormValues,
 } from "@/validations/login/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { IdCard, RefreshCwIcon, Smartphone } from "lucide-react";
-import { Controller, useForm } from "react-hook-form";
+import { IdCard, Smartphone } from "lucide-react";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { control, handleSubmit } = useForm<LoginFormValues>({
+  const { mutateAsync: sendOtp, isPending: isSendingOtp } = useSendOtp();
+  const { mutateAsync: verifyOtp, isPending: isVerifyingOtp } = useVerifyOtp();
+
+  const { control, handleSubmit, setValue, reset } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       aadhar: "",
       mobile: "",
       otp: "",
+      otpSent: false,
+      txnId: "",
     },
   });
+  const otpSent = useWatch({ control, name: "otpSent" });
 
-  const onSubmit = (data: LoginFormValues) => {
-    console.log("Login Data:", data);
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      if (!data.otpSent) {
+        const res = await sendOtp({
+          aadhaar_number: data.aadhar,
+          mobile: data.mobile,
+        });
+
+        setValue("txnId", res.txn_id);
+        setValue("otpSent", true);
+        return;
+      }
+
+      if (data.otpSent && data.otp && data.txnId) {
+        await verifyOtp({
+          mobile: data.mobile,
+          otp: data.otp,
+          txn_id: data.txnId,
+        });
+
+        reset();
+        navigate("/dashboard");
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -95,47 +127,47 @@ const LoginForm = () => {
                 )}
               />
 
-              <Controller
-                name="otp"
-                control={control}
-                render={({ field, fieldState: { error } }) => (
-                  <Field>
-                    <div className="flex items-center justify-between">
+              {otpSent && (
+                <Controller
+                  name="otp"
+                  control={control}
+                  render={({ field, fieldState: { error } }) => (
+                    <Field>
                       <FieldLabel htmlFor="otp-verification">
                         Verification code
                       </FieldLabel>
-                      <Button variant="outline" size="xs">
-                        <RefreshCwIcon />
-                        Resend Code
-                      </Button>
-                    </div>
-                    <InputOTP
-                      maxLength={6}
-                      pattern={REGEXP_ONLY_DIGITS}
-                      value={field.value}
-                      onChange={field.onChange}
-                    >
-                      <InputOTPGroup className="*:flex-1 w-full">
-                        <InputOTPSlot index={0} />
-                        <InputOTPSlot index={1} />
-                        <InputOTPSlot index={2} />
-                        <InputOTPSlot index={3} />
-                        <InputOTPSlot index={4} />
-                        <InputOTPSlot index={5} />
-                      </InputOTPGroup>
-                    </InputOTP>
-                    <FieldError className="-mt-2">{error?.message}</FieldError>
-                  </Field>
-                )}
-              />
+                      <InputOTP
+                        autoFocus
+                        maxLength={6}
+                        pattern={REGEXP_ONLY_DIGITS}
+                        value={field.value}
+                        onChange={field.onChange}
+                      >
+                        <InputOTPGroup className="*:flex-1 w-full">
+                          <InputOTPSlot index={0} />
+                          <InputOTPSlot index={1} />
+                          <InputOTPSlot index={2} />
+                          <InputOTPSlot index={3} />
+                          <InputOTPSlot index={4} />
+                          <InputOTPSlot index={5} />
+                        </InputOTPGroup>
+                      </InputOTP>
+                      <FieldError className="-mt-2">
+                        {error?.message}
+                      </FieldError>
+                    </Field>
+                  )}
+                />
+              )}
 
               <Field>
                 <Button
-                  onClick={() => navigate("/dashboard")}
                   type="submit"
                   className="w-full cursor-pointer"
+                  loading={isSendingOtp || isVerifyingOtp}
+                  disabled={isSendingOtp || isVerifyingOtp}
                 >
-                  Login
+                  {otpSent ? "Login" : "Generate OTP"}
                 </Button>
                 <FieldDescription className="text-center">
                   OTP will be sent to your mobile number
@@ -149,7 +181,6 @@ const LoginForm = () => {
         By clicking continue, you agree to our{" "}
         <span className="underline underline-offset-2">Terms of Service</span>{" "}
         and <span className="underline underline-offset-2">Privacy Policy</span>
-        .
       </FieldDescription>
     </div>
   );
