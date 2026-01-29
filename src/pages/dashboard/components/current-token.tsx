@@ -18,7 +18,7 @@ const CurrentToken = ({ data }: { data: TokenInfo }) => {
         <CardTitle className="uppercase text-xs text-muted-foreground tracking-wider">
           Current Token
         </CardTitle>
-        <CardDescription className="text-2xl text-white font-bold">
+        <CardDescription className="text-xl text-white font-bold">
           {data.token_number}
         </CardDescription>
         <CardAction>

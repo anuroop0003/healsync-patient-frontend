@@ -3,6 +3,7 @@ import Chat from "@/pages/chat";
 import Dashboard from "@/pages/dashboard";
 import Login from "@/pages/login";
 import MedicalHistory from "@/pages/medical-history";
+import QrScan from "@/pages/scan";
 import { createBrowserRouter } from "react-router-dom";
 import { PrivateRoute, PublicRoute } from "./route-guards";
 
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
           { path: "chat", element: <Chat /> },
           { path: "profile", element: <div>Profile</div> },
         ],
+      },
+      {
+        path: "scan",
+        element: <QrScan />,
       },
     ],
   },

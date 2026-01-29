@@ -17,7 +17,7 @@ const ABHACard = ({ data }: { data: AbhaInfo }) => {
         <CardTitle className="uppercase text-xs text-muted-foreground tracking-wider">
           ABHA Card
         </CardTitle>
-        <CardDescription className="text-2xl text-white font-bold">
+        <CardDescription className="text-xl text-white font-bold">
           {data.abha_number}
         </CardDescription>
 

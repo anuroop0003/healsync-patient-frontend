@@ -98,23 +98,24 @@ const Chat = () => {
 
         <Button
           size="icon"
+          // Disable default browser behaviors via inline style or the CSS class above
+          style={{
+            touchAction: "none",
+            WebkitTouchCallout: "none",
+            userSelect: "none",
+          }}
           className={cn(
-            "relative z-10 size-24 rounded-full shadow-xl transition-all duration-75 select-none cursor-pointer",
-            recording
-              ? "bg-destructive hover:bg-destructive scale-105"
-              : "bg-primary hover:bg-primary",
+            "relative z-10 size-24 rounded-full shadow-xl transition-all duration-75 touch-none",
+            recording ? "bg-destructive scale-105" : "bg-primary",
           )}
-          onMouseDown={startRecording}
-          onMouseUp={stopRecording}
-          onMouseLeave={stopRecording}
-          onTouchStart={(e) => {
-            e.preventDefault();
+          onPointerDown={(e) => {
+            e.preventDefault(); // Stop ghost clicks
             startRecording();
           }}
-          onTouchEnd={(e) => {
-            e.preventDefault();
-            stopRecording();
-          }}
+          onPointerUp={stopRecording}
+          onPointerCancel={stopRecording}
+          onPointerLeave={stopRecording}
+          onContextMenu={(e) => e.preventDefault()} // 👈 Stop the right-click menu
         >
           <Mic className={cn("size-8 text-white", recording && "scale-110")} />
         </Button>

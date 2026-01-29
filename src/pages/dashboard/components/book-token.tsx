@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageSquare, QrCode, type LucideIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const FeatureButton = ({
   icon: Icon,
@@ -10,7 +11,7 @@ const FeatureButton = ({
   label: string;
 }) => {
   return (
-    <Button className="h-40 flex-col gap-3 rounded-3xl">
+    <Button className="w-full h-40 flex-col gap-3 rounded-3xl">
       <div className="size-14 rounded-full bg-white/10 flex items-center justify-center">
         <Icon className="size-8" />
       </div>
@@ -28,8 +29,12 @@ const BookToken = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="grid grid-cols-2 gap-3 p-0">
-        <FeatureButton icon={MessageSquare} label="Chat & Book" />
-        <FeatureButton icon={QrCode} label="Scan & Book" />
+        <Link to="/chat">
+          <FeatureButton icon={MessageSquare} label="Chat & Book" />
+        </Link>
+        <Link to="/scan">
+          <FeatureButton icon={QrCode} label="Scan & Book" />
+        </Link>
       </CardContent>
     </Card>
   );
