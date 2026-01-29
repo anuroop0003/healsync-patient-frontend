@@ -7,7 +7,7 @@ import Header from "./components/header";
 import RecordsServices from "./components/records-services";
 
 const Dashboard = () => {
-  const { data, isFetching } = useGetDashboard();
+  const { isFetching } = useGetDashboard();
 
   if (isFetching)
     return (
