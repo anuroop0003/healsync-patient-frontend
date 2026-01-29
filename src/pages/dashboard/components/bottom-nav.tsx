@@ -24,7 +24,7 @@ const NavItem = ({
     <Button
       variant="ghost"
       className={cn(
-        "flex flex-col items-center text-xs gap-1 cursor-pointer h-auto py-2",
+        "flex flex-col items-center text-xs gap-1 cursor-pointer",
         active
           ? "text-primary font-bold opacity-100"
           : "text-muted-foreground font-medium opacity-50",
@@ -46,7 +46,7 @@ const BottomNav = () => {
     location.pathname.startsWith(`/${path}/`);
 
   return (
-    <nav className="fixed bottom-0 left-0 border-t bg-background flex items-center justify-around h-20 w-full px-2 pb-[env(safe-area-inset-bottom)]">
+    <nav className="h-20 border-t bg-background flex items-center justify-around">
       <NavItem
         icon={Home}
         label="Home"

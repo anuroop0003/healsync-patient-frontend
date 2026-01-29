@@ -3,10 +3,8 @@ import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
   return (
-    <div className="relative min-h-dvh flex flex-col bg-background overflow-hidden">
-      <main className="flex-1 min-h-0 relative pb-16">
-        <Outlet />
-      </main>
+    <div className="min-h-dvh flex flex-col">
+      <Outlet />
       <BottomNav />
     </div>
   );
