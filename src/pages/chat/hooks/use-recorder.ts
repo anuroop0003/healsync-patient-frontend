@@ -22,7 +22,7 @@ export const useRecorder = () => {
       };
 
       mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(chunksRef.current, { type: "audio/webm" });
+        // const audioBlob = new Blob(chunksRef.current, { type: "audio/webm" });
 
         // --- TRANSCRIPTION LOGIC ---
         // For now, we use your placeholder.

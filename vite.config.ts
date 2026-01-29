@@ -57,6 +57,7 @@ export default defineConfig({
   },
   server: {
     port: 3002,
-    host: true
+    host: true,
+    allowedHosts: ["mgpia-49-207-206-207.a.free.pinggy.link"]
   },
 })
