@@ -17,23 +17,23 @@ const Login = () => {
             <path
               d="M287 512H737"
               stroke="white"
-              stroke-width="100"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="100"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M287 812V212"
               stroke="white"
-              stroke-width="100"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="100"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M737 812V212"
               stroke="white"
-              stroke-width="100"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="100"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
           HealSync.

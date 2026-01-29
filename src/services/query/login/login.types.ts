@@ -15,5 +15,6 @@ export type VerifyOtpPayload = {
 };
 
 export type VerifyOtpResponse = {
-  token: string;
+  message: string;
+  access_token: string;
 };

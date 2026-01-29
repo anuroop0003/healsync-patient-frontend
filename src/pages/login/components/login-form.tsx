@@ -71,7 +71,7 @@ const LoginForm = () => {
           txn_id: data.txnId,
         });
 
-        localStorage.setItem("access_token", res.token);
+        localStorage.setItem("access_token", res.access_token);
         reset();
         navigate("/dashboard");
         return;
