@@ -46,7 +46,7 @@ const BottomNav = () => {
     location.pathname.startsWith(`/${path}/`);
 
   return (
-    <nav className="border-t bg-background flex items-center justify-around pb-[env(safe-area-inset-bottom)] min-h-20">
+    <nav className="border-t bg-background flex items-center justify-around pb-[env(safe-area-inset-bottom)] h-20 px-2">
       <NavItem
         icon={Home}
         label="Home"

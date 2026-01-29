@@ -17,7 +17,7 @@ const Dashboard = () => {
     );
 
   return (
-    <div className="flex-1 bg-background flex flex-col overflow-auto">
+    <div className="h-full bg-background flex flex-col overflow-y-auto">
       <Header name={data.data.name} />
       <div className="flex-1 px-3 space-y-12 mb-6">
         {data.data.token ? (
