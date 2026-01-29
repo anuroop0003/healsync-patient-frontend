@@ -1,12 +1,3 @@
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,19 +18,22 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import {
+  loginSchema,
+  type LoginFormValues,
+} from "@/validations/login/login.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { IdCard, RefreshCwIcon, Smartphone } from "lucide-react";
-
-const loginSchema = z.object({
-  aadhar: z.string().regex(/^\d{12}$/, "Aadhaar must be exactly 12 digits"),
-  mobile: z
-    .string()
-    .regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"),
-  otp: z.string().length(6, "OTP must be 6 digits"),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const { control, handleSubmit } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -133,7 +127,11 @@ const LoginForm = () => {
               />
 
               <Field>
-                <Button type="submit" className="w-full cursor-pointer">
+                <Button
+                  onClick={() => navigate("/dashboard")}
+                  type="submit"
+                  className="w-full cursor-pointer"
+                >
                   Login
                 </Button>
                 <FieldDescription className="text-center">

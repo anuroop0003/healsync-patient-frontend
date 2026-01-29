@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   FolderOpen,
   Home,
@@ -5,33 +7,70 @@ import {
   User,
   type LucideIcon,
 } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const NavItem = ({
   icon: Icon,
   label,
   active,
+  onClick,
 }: {
   icon: LucideIcon;
   label: string;
   active?: boolean;
+  onClick: () => void;
 }) => {
   return (
-    <div
-      className={`flex flex-col items-center text-xs ${active ? "text-primary" : "text-muted-foreground"}`}
+    <Button
+      variant="ghost"
+      className={cn(
+        "flex flex-col items-center text-xs gap-1 cursor-pointer",
+        active
+          ? "text-primary font-bold opacity-100"
+          : "text-muted-foreground font-medium opacity-50",
+      )}
+      onClick={onClick}
     >
       <Icon className="size-5" />
-      <span>{label}</span>
-    </div>
+      {label}
+    </Button>
   );
 };
 
 const BottomNav = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path: string) =>
+    location.pathname === `/${path}` ||
+    location.pathname.startsWith(`/${path}/`);
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 h-20 border-t bg-background flex items-center justify-around">
-      <NavItem icon={Home} label="Home" active />
-      <NavItem icon={MessageSquare} label="AI Chat" />
-      <NavItem icon={FolderOpen} label="Records" />
-      <NavItem icon={User} label="Profile" />
+      <NavItem
+        icon={Home}
+        label="Home"
+        active={isActive("dashboard")}
+        onClick={() => navigate("/dashboard")}
+      />
+      <NavItem
+        icon={MessageSquare}
+        label="AI Chat"
+        active={isActive("chat")}
+        onClick={() => navigate("/chat")}
+      />
+      <NavItem
+        icon={FolderOpen}
+        label="Records"
+        active={isActive("medical-history")}
+        onClick={() => navigate("/medical-history")}
+      />
+      <NavItem
+        icon={User}
+        label="Profile"
+        active={isActive("profile")}
+        onClick={() => navigate("/profile")}
+      />
     </nav>
   );
 };

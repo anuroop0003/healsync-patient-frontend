@@ -1,17 +1,15 @@
-import * as React from "react";
-import * as AvatarPrimitive from "@radix-ui/react-avatar";
-
 import { cn } from "@/lib/utils";
+import { Fallback, Image, Root } from "@radix-ui/react-avatar";
 
 function Avatar({
   className,
   size = "default",
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Root> & {
+}: React.ComponentProps<typeof Root> & {
   size?: "default" | "sm" | "lg";
 }) {
   return (
-    <AvatarPrimitive.Root
+    <Root
       data-slot="avatar"
       data-size={size}
       className={cn(
@@ -26,9 +24,9 @@ function Avatar({
 function AvatarImage({
   className,
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Image>) {
+}: React.ComponentProps<typeof Image>) {
   return (
-    <AvatarPrimitive.Image
+    <Image
       data-slot="avatar-image"
       className={cn("aspect-square size-full", className)}
       {...props}
@@ -39,9 +37,9 @@ function AvatarImage({
 function AvatarFallback({
   className,
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
+}: React.ComponentProps<typeof Fallback>) {
   return (
-    <AvatarPrimitive.Fallback
+    <Fallback
       data-slot="avatar-fallback"
       className={cn(
         "bg-muted text-muted-foreground flex size-full items-center justify-center rounded-full text-sm group-data-[size=sm]/avatar:text-xs",
@@ -99,9 +97,9 @@ function AvatarGroupCount({
 
 export {
   Avatar,
-  AvatarImage,
-  AvatarFallback,
   AvatarBadge,
+  AvatarFallback,
   AvatarGroup,
   AvatarGroupCount,
+  AvatarImage,
 };

@@ -9,7 +9,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
 
-      <main className="flex-1 px-3 space-y-12 pb-28">
+      <main className="flex-1 px-3 space-y-12">
         <CurrentToken />
         <BookToken />
         <RecordsServices />

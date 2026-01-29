@@ -1,3 +1,4 @@
+import AppLayout from "@/components/app-layout";
 import Dashboard from "@/pages/dashboard";
 import Login from "@/pages/login";
 import MedicalHistory from "@/pages/medical-history";
@@ -9,11 +10,24 @@ export const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "dashboard",
-    element: <Dashboard />,
-  },
-  {
-    path: "medical-history",
-    element: <MedicalHistory />,
+    element: <AppLayout />,
+    children: [
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "medical-history",
+        element: <MedicalHistory />,
+      },
+      {
+        path: "chat",
+        element: <div>AI Chat</div>,
+      },
+      {
+        path: "profile",
+        element: <div>Profile</div>,
+      },
+    ],
   },
 ]);

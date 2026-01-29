@@ -16,7 +16,7 @@ const OutlineFeature = ({
 }) => {
   return (
     <Button variant="outline" className="h-40 flex-col gap-3 rounded-3xl">
-      <div className="size-14 rounded-full bg-muted/40 flex items-center justify-center">
+      <div className="size-14 rounded-full bg-muted flex items-center justify-center">
         <Icon className="size-8" />
       </div>
       <p className="text-sm font-semibold">{label}</p>
@@ -26,7 +26,7 @@ const OutlineFeature = ({
 
 const RecordsServices = () => {
   return (
-    <Card className="p-0 border-none shadow-none gap-3">
+    <Card className="p-0 border-none shadow-none gap-1">
       <CardHeader className="p-0">
         <CardTitle className="uppercase text-sm text-muted-foreground tracking-wider">
           Records & Services

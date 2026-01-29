@@ -21,7 +21,7 @@ const FeatureButton = ({
 
 const BookToken = () => {
   return (
-    <Card className="p-0 border-none shadow-none gap-3">
+    <Card className="p-0 border-none shadow-none gap-1">
       <CardHeader className="p-0">
         <CardTitle className="uppercase text-sm text-muted-foreground tracking-wider">
           Book New Token
