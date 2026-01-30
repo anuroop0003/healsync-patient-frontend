@@ -7,44 +7,85 @@ import { useEffect } from "react";
 
 interface VoiceViewProps {
   recording: boolean;
-  transcript: string;
+  transcript: Blob | null;
+  setTranscript: (v: Blob | null) => void;
   startRecording: () => void;
   stopRecording: () => void;
   onSwitch: () => void;
+  messages: any[];
+  setMessages: (v: any) => void;
 }
 
 const VoiceView = ({
   recording,
   transcript,
+  setTranscript,
   startRecording,
   stopRecording,
   onSwitch,
+  messages,
+  setMessages,
 }: VoiceViewProps) => {
   const { mutateAsync: sendMessage, isPending } = useChatMessage();
 
-  // Handle sending transcript if it's generated (mocked in useRecorder for now)
+  // Handle sending transcript if it's generated
   useEffect(() => {
     if (transcript && !recording) {
       const sendVoiceMessage = async () => {
         try {
-          await sendMessage({
-            message: transcript,
+          const response = await sendMessage({
+            audio: transcript,
             thread_id: "default-thread",
-            user_id: "default-user",
+            // user_id: crypto.randomUUID(),
             is_audio: true,
           });
-          // After success, we might want to switch to text view to see the response
-          // or handle it here. For now, let's just log.
+
+          if (response) {
+            setMessages((prev: any[]) => [
+              ...prev,
+              { role: "user", content: "Voice message" },
+              {
+                role: "assistant",
+                content: response.message,
+                type: response.type,
+                token: "token" in response ? response.token : undefined,
+                doctor_id:
+                  "doctor_id" in response ? response.doctor_id : undefined,
+              },
+            ]);
+            setTranscript(null);
+            onSwitch(); // Switch to text view to see the response
+          }
         } catch (error) {
           console.error("Failed to send voice message:", error);
+          setMessages((prev: any[]) => [
+            ...prev,
+            {
+              role: "assistant",
+              content:
+                "Sorry, I couldn't process your voice message. Please try again or switch to text mode.",
+            },
+          ]);
         }
       };
       sendVoiceMessage();
     }
-  }, [transcript, recording, sendMessage]);
+  }, [
+    transcript,
+    recording,
+    sendMessage,
+    setMessages,
+    setTranscript,
+    onSwitch,
+  ]);
+
+  // Keep track of messages count for debugging or side effects if needed
+  useEffect(() => {
+    console.log(`Current session message count: ${messages.length}`);
+  }, [messages]);
 
   return (
-    <div className="flex-1 bg-background flex flex-col px-4 py-8 text-center space-y-8 select-none justify-between">
+    <div className="flex-1 bg-background flex flex-col px-4 py-8 text-center space-y-8 select-none justify-between overflow-hidden">
       <div className="space-y-4">
         <h1 className="text-3xl font-bold leading-tight tracking-tight">
           Describe your symptoms <br /> to book a token
@@ -54,7 +95,7 @@ const VoiceView = ({
         </p>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center space-y-12">
+      <div className="flex-1 flex flex-col items-center justify-center space-y-12 min-h-0">
         <div className="w-full max-w-sm p-8 rounded-3xl border-2 border-dashed transition-all duration-300 flex items-center justify-center text-xl bg-secondary/50 min-h-32">
           {recording ? (
             <div className="flex flex-col items-center gap-2">
@@ -80,11 +121,11 @@ const VoiceView = ({
               className={cn(
                 "leading-relaxed",
                 transcript
-                  ? "text-foreground font-medium"
+                  ? "text-foreground font-medium italic"
                   : "text-muted-foreground",
               )}
             >
-              {transcript || "Tap and hold the mic to speak"}
+              {transcript ? "Audio captured" : "Tap and hold the mic to speak"}
             </span>
           )}
         </div>
@@ -130,7 +171,7 @@ const VoiceView = ({
         </div>
       </div>
 
-      <footer className="flex flex-col items-center gap-6">
+      <footer className="flex flex-col items-center gap-6 shrink-0">
         {!recording && !isPending && (
           <Button
             variant="outline"

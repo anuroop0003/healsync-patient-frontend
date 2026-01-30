@@ -1,12 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  FolderOpen,
-  Home,
-  MessageSquare,
-  User,
-  type LucideIcon,
-} from "lucide-react";
+import { FolderOpen, Home, MessageSquare, type LucideIcon } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const NavItem = ({
@@ -46,7 +40,7 @@ const BottomNav = () => {
     location.pathname.startsWith(`/${path}/`);
 
   return (
-    <nav className="h-20 border-t bg-background flex items-center justify-around">
+    <nav className="fixed bottom-0 left-0 right-0 h-20 border-t bg-background flex items-center justify-around pb-[env(safe-area-inset-bottom)] z-50">
       <NavItem
         icon={Home}
         label="Home"
@@ -64,12 +58,6 @@ const BottomNav = () => {
         label="Records"
         active={isActive("medical-history")}
         onClick={() => navigate("/medical-history")}
-      />
-      <NavItem
-        icon={User}
-        label="Profile"
-        active={isActive("profile")}
-        onClick={() => navigate("/profile")}
       />
     </nav>
   );

@@ -11,15 +11,15 @@ const Dashboard = () => {
 
   if (isFetching || !data)
     return (
-      <div className="h-full flex flex-col items-center justify-center bg-background">
+      <div className="min-h-full flex items-center justify-center">
         <Loader2 className="size-10 animate-spin" />
       </div>
     );
 
   return (
-    <div className="h-full bg-background flex flex-col overflow-y-auto">
+    <div className="bg-background flex flex-col">
       <Header name={data.data.name} />
-      <div className="flex-1 px-3 space-y-12 mb-6">
+      <div className="px-3 space-y-12 mb-6">
         {data.data.token ? (
           <CurrentToken data={data.data.token} />
         ) : (

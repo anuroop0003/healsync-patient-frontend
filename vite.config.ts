@@ -58,6 +58,6 @@ export default defineConfig({
   server: {
     port: 3002,
     host: true,
-    allowedHosts: ["mgpia-49-207-206-207.a.free.pinggy.link"]
+    allowedHosts: ["vrpva-2409-40f2-4f-4851-d5a1-65b1-76ed-3e62.a.free.pinggy.link"]
   },
 })

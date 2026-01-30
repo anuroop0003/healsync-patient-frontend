@@ -2,9 +2,9 @@ export type ChatMessageResponse = ChatTextResponse | TokenGeneratedResponse;
 
 export interface ChatMessagePayload {
   message?: string;
-  file?: File;
+  audio?: File | Blob;
   thread_id: string;
-  user_id: string;
+  // user_id: string;
   hospital_id?: string;
   is_audio: boolean;
 }

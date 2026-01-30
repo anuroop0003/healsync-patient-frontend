@@ -15,7 +15,7 @@ export const useChatMessage = () => {
 
       // Required fields
       formData.append("thread_id", payload.thread_id);
-      formData.append("user_id", payload.user_id);
+      // formData.append("user_id", payload.user_id);
       formData.append("is_audio", String(payload.is_audio));
 
       // Optional fields
@@ -23,8 +23,8 @@ export const useChatMessage = () => {
         formData.append("message", payload.message);
       }
 
-      if (payload.file) {
-        formData.append("file", payload.file);
+      if (payload.audio) {
+        formData.append("audio", payload.audio, "audio.webm");
       }
 
       if (payload.hospital_id) {

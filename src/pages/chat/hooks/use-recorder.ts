@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 
 export const useRecorder = () => {
   const [recording, setRecording] = useState<boolean>(false);
-  const [transcript, setTranscript] = useState<string>("");
+  const [transcript, setTranscript] = useState<Blob | null>(null);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -22,12 +22,12 @@ export const useRecorder = () => {
       };
 
       mediaRecorder.onstop = async () => {
-        // const audioBlob = new Blob(chunksRef.current, { type: "audio/webm" });
+        const audioBlob = new Blob(chunksRef.current, { type: "audio/webm" });
 
         // --- TRANSCRIPTION LOGIC ---
         // For now, we use your placeholder.
         // Later, you can send audioBlob to an API (OpenAI Whisper, Google STT, etc.)
-        setTranscript("I have fever and headache since last night.");
+        setTranscript(audioBlob);
 
         // Cleanup: Stop all mic tracks
         stream.getTracks().forEach((track) => track.stop());
